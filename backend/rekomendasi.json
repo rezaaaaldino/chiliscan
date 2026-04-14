@@ -1,0 +1,64 @@
+{
+  "VirusKuning": {
+    "nama_penyakit": "Virus Kuning (Gemini Virus)",
+    "penyebab": [
+      "Disebabkan oleh virus Gemini yang dibawa oleh kutu kebul (Bemisia tabaci).",
+      "Penyakit cepat menyebar jika jumlah kutu kebul banyak.",
+      "Bisa menyerang cabai dan tanaman lain seperti tomat dan terung."
+    ],
+    "rekomendasi": [
+      "Kendalikan kutu kebul (bisa pakai musuh alami atau pestisida hayati).",
+      "Cabut dan buang tanaman yang sudah terinfeksi.",
+      "Bersihkan kebun dari gulma (rumput liar).",
+      "Gunakan mulsa plastik.",
+      "Tanam tanaman pembatas seperti jagung."
+    ]
+  },
+  "HamaThrips": {
+    "nama_penyakit": "Hama Thrips (Thrips parvispinus)",
+    "penyebab": [
+      "Disebabkan oleh serangan hama thrips palmi yang menghisap cairan daun.",
+      "Biasanya menyerang bagian bawah daun.",
+      "Cepat berkembang saat cuaca panas dan kering (musim kemarau).",
+      "Bisa menyebar dengan cepat dan membawa virus pada tanaman."
+    ],
+    "rekomendasi": [
+      "Pasang perangkap warna kuning.",
+      "Gunakan mulsa perak.",
+      "Bersihkan kebun dan buang daun yang terserang.",
+      "Manfaatkan musuh alami (serangga pemangsa).",
+      "Gunakan pestisida jika serangan sudah parah."
+    ]
+  },
+  "BercakDaun": {
+    "nama_penyakit": "Bercak Daun Cercospora",
+    "penyebab": [
+      "Disebabkan oleh jamur Cercospora capsici.",
+      "Mudah berkembang saat kondisi lembap dan sering hujan.",
+      "Menyebar lewat angin, percikan air hujan, dan sisa tanaman yang terinfeksi."
+    ],
+    "rekomendasi": [
+      "Gunakan pupuk yang cukup dan seimbang.",
+      "Gunakan mulsa (plastik atau jerami).",
+      "Bersihkan sisa tanaman yang sakit.",
+      "Bisa pakai pestisida alami (daun mimba).",
+      "Gunakan fungisida jika diperlukan."
+    ]
+  },
+  "DaunSehat": {
+    "nama_penyakit": "Daun Sehat",
+    "penyebab": [
+      "Daun tidak menunjukkan serangan penyakit maupun hama.",
+      "Tanaman dalam kondisi baik dan tumbuh normal."
+    ],
+    "rekomendasi": [
+      "Gunakan bibit yang bagus dan sehat.",
+      "Jaga lahan tetap bersih dari gulma.",
+      "Siram secukupnya, jangan sampai tergenang.",
+      "Pangkas tanaman agar tidak terlalu rimbun.",
+      "Gunakan mulsa plastik.",
+      "Lakukan pergiliran tanaman.",
+      "Gunakan pestisida seperlunya saja."
+    ]
+  }
+}

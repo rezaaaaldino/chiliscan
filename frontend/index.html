@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChiliScan — Deteksi Penyakit Daun Cabai</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🌶️</span>
+        <div class="logo-text">
+          <span class="logo-title">ChiliScan</span>
+          <span class="logo-sub">AI Plant Health Detector</span>
+        </div>
+      </div>
+      <div class="header-badge">
+        <span class="dot"></span> Sistem Aktif
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Powered by YOLOv8</p>
+      <h1 class="hero-title">Deteksi Penyakit<br><em>Daun Cabai</em></h1>
+      <p class="hero-desc">Upload foto atau gunakan kamera secara realtime untuk mendeteksi penyakit daun cabai dengan AI.</p>
+    </div>
+  </section>
+
+  <!-- ===== MAIN CARD ===== -->
+  <main class="container">
+    <div class="card scan-card">
+
+      <!-- Step 1: Pilih Model -->
+      <div class="step-block">
+        <div class="step-label"><span class="step-num">01</span> Pilih Model Deteksi</div>
+        <div class="model-grid">
+          <label class="model-option">
+            <input type="radio" name="model" value="3" checked />
+            <div class="model-card">
+              <div class="model-icon">🔬</div>
+              <div class="model-info">
+                <strong>Model 3 Kelas</strong>
+                <span>DaunSehat · HamaThrips · VirusKuning</span>
+              </div>
+              <div class="model-check">✓</div>
+            </div>
+          </label>
+          <label class="model-option">
+            <input type="radio" name="model" value="4" />
+            <div class="model-card">
+              <div class="model-icon">🧬</div>
+              <div class="model-info">
+                <strong>Model 4 Kelas</strong>
+                <span>BercakDaun · DaunSehat · HamaThrips · VirusKuning</span>
+              </div>
+              <div class="model-check">✓</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Step 2: Pilih Input -->
+      <div class="step-block">
+        <div class="step-label"><span class="step-num">02</span> Pilih Sumber Gambar</div>
+
+        <!-- Tab Switcher -->
+        <div class="input-tabs">
+          <button class="tab-btn active" id="tabUpload" onclick="switchTab('upload')">
+            📁 Upload Foto
+          </button>
+          <button class="tab-btn" id="tabCamera" onclick="switchTab('camera')">
+            📷 Kamera Realtime
+          </button>
+        </div>
+
+        <!-- ── Panel Upload ── -->
+        <div class="tab-panel" id="panelUpload">
+          <div class="upload-zone" id="uploadZone">
+            <input type="file" id="fileInput" accept="image/*" hidden />
+            <div class="upload-placeholder" id="uploadPlaceholder">
+              <div class="upload-icon">📷</div>
+              <p class="upload-text">Klik atau seret gambar ke sini</p>
+              <p class="upload-hint">Format: JPG, PNG, WEBP · Maks. 10 MB</p>
+            </div>
+            <div class="upload-preview" id="uploadPreview" style="display:none;">
+              <img id="previewImg" src="" alt="Preview" />
+              <button class="btn-remove" id="btnRemove" title="Hapus gambar">✕</button>
+            </div>
+          </div>
+          <button class="btn-predict" id="btnPredict" disabled>
+            <span class="btn-predict-text">Mulai Deteksi</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+
+        <!-- ── Panel Kamera ── -->
+        <div class="tab-panel" id="panelCamera" style="display:none;">
+          <div class="camera-container">
+
+            <!-- Video Feed + overlay canvas -->
+            <div class="camera-feed-wrap" id="cameraFeedWrap">
+              <div class="camera-placeholder" id="cameraPlaceholder">
+                <div class="camera-placeholder-icon">📷</div>
+                <p>Kamera belum aktif</p>
+                <p class="upload-hint">Klik "Aktifkan Kamera" untuk memulai</p>
+              </div>
+              <video id="cameraVideo" autoplay playsinline muted style="display:none;"></video>
+              <canvas id="overlayCanvas" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%;"></canvas>
+              <div class="realtime-badge" id="realtimeBadge" style="display:none;">
+                <span class="rt-dot"></span> LIVE
+              </div>
+            </div>
+
+            <!-- Kontrol Kamera -->
+            <div class="camera-controls">
+              <button class="btn-cam btn-cam-start" id="btnStartCamera" onclick="startCamera()">
+                🎥 Aktifkan Kamera
+              </button>
+              <button class="btn-cam btn-cam-stop" id="btnStopCamera" onclick="stopCamera()" style="display:none;">
+                ⏹ Matikan Kamera
+              </button>
+              <button class="btn-cam btn-cam-flip" id="btnFlipCamera" onclick="flipCamera()" style="display:none;">
+                🔄 Ganti Kamera
+              </button>
+              <button class="btn-cam btn-cam-snap" id="btnSnapshot" onclick="takeSnapshot()" style="display:none;">
+                📸 Ambil & Deteksi
+              </button>
+            </div>
+
+            <!-- Realtime Toggle -->
+            <div class="realtime-control" id="realtimeControl" style="display:none;">
+              <div class="realtime-toggle-wrap">
+                <label class="toggle-label">
+                  <input type="checkbox" id="toggleRealtime" onchange="toggleRealtimeMode(this.checked)" />
+                  <span class="toggle-switch"></span>
+                  <span class="toggle-text">Deteksi Otomatis (Realtime)</span>
+                </label>
+                <span class="toggle-hint">Bounding box langsung tampil di kamera secara realtime</span>
+              </div>
+              <div class="interval-control">
+                <label class="interval-label">Interval deteksi:</label>
+                <div class="interval-options">
+                  <button class="interval-btn active" onclick="setInterval_(this, 200)">Cepat (0.2s)</button>
+                  <button class="interval-btn" onclick="setInterval_(this, 350)">Normal (0.35s)</button>
+                  <button class="interval-btn" onclick="setInterval_(this, 600)">Lambat (0.6s)</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== LOADING ===== -->
+    <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+      <div class="loading-box">
+        <div class="spinner"></div>
+        <p class="loading-title" id="loadingTitle">Menganalisis Gambar…</p>
+        <p class="loading-sub">Model AI sedang memproses deteksi penyakit</p>
+      </div>
+    </div>
+
+    <!-- ===== ERROR ===== -->
+    <div class="error-banner" id="errorBanner" style="display:none;">
+      <span class="error-icon">⚠️</span>
+      <span id="errorMsg">Terjadi kesalahan.</span>
+      <button class="error-close" onclick="hideError()">✕</button>
+    </div>
+
+    <!-- ===== HASIL DETEKSI ===== -->
+    <section class="results-section" id="resultsSection" style="display:none;">
+      <div class="results-header">
+        <h2 class="results-title">Hasil Deteksi</h2>
+        <div class="results-meta" id="resultsMeta"></div>
+      </div>
+      <div class="results-grid">
+        <div class="card result-image-card">
+          <div class="card-label">Gambar Terdeteksi</div>
+          <div class="result-image-wrap">
+            <img id="resultImage" src="" alt="Hasil Deteksi" />
+          </div>
+        </div>
+        <div class="card result-list-card">
+          <div class="card-label">Objek Terdeteksi</div>
+          <div id="detectionList" class="detection-list"></div>
+        </div>
+      </div>
+      <div class="rekomendasi-section" id="rekomendasiSection"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 ChiliScan · Sistem Deteksi Penyakit Daun Cabai Berbasis AI</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
