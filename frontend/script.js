@@ -418,7 +418,7 @@ async function runPredict(file, silent = false) {
     renderResults(data, !silent);
   } catch (err) {
     if (err.name === "TypeError") {
-      showError("Tidak dapat terhubung ke server. Pastikan backend FastAPI berjalan di http://localhost:8000");
+      showError(`Tidak dapat terhubung ke server (${API_BASE})`);
     } else {
       showError(err.message);
     }
