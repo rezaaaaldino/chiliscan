@@ -4,7 +4,7 @@
  */
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-const API_BASE = "https://api-chiliscan-792mbx-159b14-168-110-195-174.traefik.me";
+const API_BASE = "https://168.110.195.174.sslip.io";
 
 const CLASS_META = {
   DaunSehat:   { color: "#22c55e", emoji: "🌿", label: "Daun Sehat" },
